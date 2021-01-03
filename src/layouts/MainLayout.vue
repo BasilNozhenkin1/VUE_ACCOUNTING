@@ -23,7 +23,7 @@ import Sidebar from "../components/app/Sidebar.vue";
 
 export default {
   name: 'main-layout',
-  data: ()=> ({
+  data: () => ({
     isOpen: true
   }),
   components: {
