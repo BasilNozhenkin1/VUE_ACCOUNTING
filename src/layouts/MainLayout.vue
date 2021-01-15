@@ -1,12 +1,12 @@
 <template>
   <div class="app-main-layout">
+    <Navbar @click="isOpen = !isOpen" />
+    <Sidebar v-model="isOpen" />
 
-    <Navbar @click="isOpen = !isOpen"/>
-    <Sidebar v-model="isOpen"/>
-
-    <main class="app-content" :class="{full : !isOpen}">
+    <main class="app-content" :class="{ full: !isOpen }">
       <div class="app-page">
-        <router-view/>
+				<Loader v-if="loading"/>
+        <router-view v-else/>
       </div>
     </main>
 
@@ -18,16 +18,24 @@
   </div>
 </template>
 <script>
-import Navbar from "../components/app/Nabvar";
-import Sidebar from "../components/app/Sidebar.vue";
+import Navbar from "@/components/app/Nabvar";
+import Sidebar from "@/components/app/Sidebar.vue";
 
 export default {
-  name: 'main-layout',
-  data: ()=> ({
-    isOpen: true
+  name: "main-layout",
+  data: () => ({
+    isOpen: true,
+		loading: true
   }),
+  async mounted() {
+    if (!Object.keys(this.$store.getters.info).length) {
+      await this.$store.dispatch("getInfo");
+    }
+    this.loading = false;
+  },
   components: {
-    Navbar, Sidebar
+    Navbar,
+    Sidebar
   }
-}
+};
 </script>

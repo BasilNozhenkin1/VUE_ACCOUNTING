@@ -6,7 +6,9 @@ import router from "./router";
 import store from "./store";
 
 import dateFilter from "@/filters/date.filter";
+import currencyFilter from "@/filters/currency.filter";
 import messagePlugin from "@/utils/message.plugin";
+import Loader from "@/components/Loader";
 
 import firebase from "firebase";
 import "firebase/auth";
@@ -19,28 +21,30 @@ Vue.config.productionTip = false;
 
 Vue.use(Vuelidate);
 Vue.use(messagePlugin);
-Vue.filter('date', dateFilter);
+Vue.filter("date", dateFilter);
+Vue.filter("currency", currencyFilter);
+Vue.component("Loader", Loader);
 
 firebase.initializeApp({
-  apiKey: "AIzaSyCpb86M5kFNX7cfjwrityUm3Kto1ubiIy0",
-  authDomain: "vue-practice-416e1.firebaseapp.com",
-  projectId: "vue-practice-416e1",
-  storageBucket: "vue-practice-416e1.appspot.com",
-  messagingSenderId: "689065642528",
-  appId: "1:689065642528:web:fd87a356de421a4ed70a45",
-  measurementId: "G-3RFB927Q4M"
+	apiKey: process.env.VUE_APP_FIREBASE,
+	authDomain: "tidal-mote-255505.firebaseapp.com",
+	databaseURL: "https://tidal-mote-255505-default-rtdb.firebaseio.com",
+	projectId: "tidal-mote-255505",
+	storageBucket: "tidal-mote-255505.appspot.com",
+	messagingSenderId: "1061735442479",
+	appId: "1:1061735442479:web:8ecd6c3f9944e17e913eda",
+	measurementId: "G-JCT2YPLBBR"
 });
 
 let app;
 
 firebase.auth().onAuthStateChanged(() => {
-  if (!app) {
-    app = new Vue({
-      router,
-      store,
-      Vuelidate,
-      render: h => h(App)
-    }).$mount("#app");
-  }
+	if (!app) {
+		app = new Vue({
+			router,
+			store,
+			Vuelidate,
+			render: h => h(App)
+		}).$mount("#app");
+	}
 });
-
